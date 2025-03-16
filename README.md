@@ -118,5 +118,5 @@ sudo systemctl restart kubelet
 
 
 # 출처
-https://ikcoo.tistory.com/65
-ChatGPT
+- https://ikcoo.tistory.com/65  
+- ChatGPT
