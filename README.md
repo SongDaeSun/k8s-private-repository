@@ -78,7 +78,7 @@ Image pull secrtes: 항목에 secret이 할당되어있는것을 확인할 수 �
 # k8s worker 설정
 ## 1단계: Docker Insecure Registry 설정 재확인
 ```
-sudo nano /etc/docker/daemon.json
+sudo vim /etc/docker/daemon.json
 ```
 📍 설정 확인:
 ```
@@ -99,7 +99,7 @@ sudo mkdir -p /etc/containerd
 ```
 📍 Containerd 설정 파일 생성:
 ```
-sudo nano /etc/containerd/config.toml
+sudo vim /etc/containerd/config.toml
 ```
 📍 다음 내용 추가:
 ```
