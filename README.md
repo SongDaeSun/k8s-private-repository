@@ -75,6 +75,48 @@ kubectl patch -n default serviceaccount/default -p '{"imagePullSecrets":[{"name"
 다시 namespace를 확인해보면  
 Image pull secrtes: 항목에 secret이 할당되어있는것을 확인할 수 있음.
 
+# k8s worker 설정
+## 1단계: Docker Insecure Registry 설정 재확인
+```
+sudo nano /etc/docker/daemon.json
+```
+📍 설정 확인:
+```
+{
+  "insecure-registries": ["192.168.0.16:5000"]
+}
+```
+없다면 추가하고, Docker 재시작:
+```
+sudo systemctl daemon-reexec
+sudo systemctl restart docker
+```
+
+## 🚀 2단계: Kubelet에 Insecure Registry 설정 추가
+Kubelet도 별도로 Insecure Registry를 인식하게 해야 합니다.
+```
+sudo mkdir -p /etc/containerd
+```
+📍 Containerd 설정 파일 생성:
+```
+sudo nano /etc/containerd/config.toml
+```
+📍 다음 내용 추가:
+```
+version = 2
+
+[plugins."io.containerd.grpc.v1.cri".registry.mirrors."192.168.0.16:5000"]
+  endpoint = ["http://192.168.0.16:5000"]
+```
+
+## ✅ 3단계: Kubelet 재시작
+```
+sudo systemctl daemon-reexec
+sudo systemctl restart containerd
+sudo systemctl restart kubelet
+```
+
 
 # 출처
-
+https://ikcoo.tistory.com/65
+ChatGPT
